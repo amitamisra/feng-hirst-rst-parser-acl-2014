@@ -38,7 +38,7 @@
 #define HAVE_LIMITS_H 1
 
 /* Define to 1 if you have the <malloc.h> header file. */
-#define HAVE_MALLOC_H 1
+/* #undef HAVE_MALLOC_H */
 
 /* Define to 1 if you have the <memory.h> header file. */
 #define HAVE_MEMORY_H 1
@@ -126,7 +126,7 @@
 #define SIZEOF_INT 4
 
 /* The size of `long', as computed by sizeof. */
-#define SIZEOF_LONG 4
+#define SIZEOF_LONG 8
 
 /* The size of `short', as computed by sizeof. */
 #define SIZEOF_SHORT 2
@@ -135,7 +135,7 @@
 #define SIZEOF_UNSIGNED_INT 4
 
 /* The size of `unsigned long', as computed by sizeof. */
-#define SIZEOF_UNSIGNED_LONG 4
+#define SIZEOF_UNSIGNED_LONG 8
 
 /* The size of `unsigned short', as computed by sizeof. */
 #define SIZEOF_UNSIGNED_SHORT 2

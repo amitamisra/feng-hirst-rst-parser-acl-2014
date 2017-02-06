@@ -11,7 +11,7 @@
 
 # Sed substitution that helps us do robust quoting.  It backslashifies
 # metacharacters that are still active within double-quoted strings.
-Xsed='/bin/sed -e 1s/^X//'
+Xsed='/usr/bin/sed -e 1s/^X//'
 sed_quote_subst='s/\([`"$\\]\)/\\\1/g'
 
 # Be Bourne compatible
@@ -32,17 +32,17 @@ DUALCASE=1; export DUALCASE # for MKS sh
 # if CDPATH is set.
 (unset CDPATH) >/dev/null 2>&1 && unset CDPATH
 
-relink_command="(cd /u/weifeng/commercialized/gCRF/tools/crfsuite/crfsuite-0.12/frontend; { test -z \"\${LIBRARY_PATH+set}\" || unset LIBRARY_PATH || { LIBRARY_PATH=; export LIBRARY_PATH; }; }; { test -z \"\${COMPILER_PATH+set}\" || unset COMPILER_PATH || { COMPILER_PATH=; export COMPILER_PATH; }; }; { test -z \"\${GCC_EXEC_PREFIX+set}\" || unset GCC_EXEC_PREFIX || { GCC_EXEC_PREFIX=; export GCC_EXEC_PREFIX; }; }; { test -z \"\${LD_RUN_PATH+set}\" || unset LD_RUN_PATH || { LD_RUN_PATH=; export LD_RUN_PATH; }; }; { test -z \"\${LD_LIBRARY_PATH+set}\" || unset LD_LIBRARY_PATH || { LD_LIBRARY_PATH=; export LD_LIBRARY_PATH; }; }; PATH=/u/weifeng/bin:/local/bin:/local/X11/bin:/local/bin/X11:/usr/bin/X11:/usr/ucb:/bin:/usr/bin:/usr/ccs/bin:/opt/matlab/bin:.; export PATH; gcc -I../include -mfpmath=sse -msse2 -DUSE_SSE -O3 -fomit-frame-pointer -ffast-math -Winline -std=c99 -o \$progdir/\$file crfsuite-iwa.o crfsuite-option.o crfsuite-reader.o crfsuite-learn.o crfsuite-tag.o crfsuite-dump.o crfsuite-main.o  -L/u/weifeng/commercialized/gCRF/tools/crfsuite/crfsuite-0.12/lib ../lib/crf/.libs/libcrfsuite.so /u/weifeng/commercialized/gCRF/tools/crfsuite/liblbfgs-1.10/lib/liblbfgs.so -lm -Wl,-rpath -Wl,/u/weifeng/commercialized/gCRF/tools/crfsuite/crfsuite-0.12/lib/crf/.libs -Wl,-rpath -Wl,/u/weifeng/commercialized/gCRF/tools/crfsuite/liblbfgs-1.10/lib -Wl,-rpath -Wl,/u/weifeng/commercialized/gCRF/tools/crfsuite/crfsuite-0.12/lib -Wl,-rpath -Wl,/u/weifeng/commercialized/gCRF/tools/crfsuite/liblbfgs-1.10/lib)"
+relink_command=""
 
 # This environment variable determines our operation mode.
 if test "$libtool_install_magic" = "%%%MAGIC variable%%%"; then
   # install mode needs the following variables:
   generated_by_libtool_version='2.2.6b'
-  notinst_deplibs=' ../lib/crf/libcrfsuite.la'
+  notinst_deplibs=' ../lib/crf/libcrfsuite.la /Users/amita/git/feng-hirst-rst-parser-acl-2014/tools/crfsuite/crfsuite-0.12/lib/cqdb/libcqdb.la'
 else
   # When we are sourced in execute mode, $file and $ECHO are already set.
   if test "$libtool_execute_magic" != "%%%MAGIC variable%%%"; then
-    ECHO="echo"
+    ECHO="/bin/echo"
     file="$0"
     # Make sure echo works.
     if test "X$1" = X--no-reexec; then
@@ -62,7 +62,7 @@ else
   test "x$thisdir" = "x$file" && thisdir=.
 
   # Follow symbolic links until we get to the real thisdir.
-  file=`ls -ld "$file" | /bin/sed -n 's/.*-> //p'`
+  file=`ls -ld "$file" | /usr/bin/sed -n 's/.*-> //p'`
   while test -n "$file"; do
     destdir=`$ECHO "X$file" | $Xsed -e 's%/[^/]*$%%'`
 
@@ -75,7 +75,7 @@ else
     fi
 
     file=`$ECHO "X$file" | $Xsed -e 's%^.*/%%'`
-    file=`ls -ld "$thisdir/$file" | /bin/sed -n 's/.*-> //p'`
+    file=`ls -ld "$thisdir/$file" | /usr/bin/sed -n 's/.*-> //p'`
   done
 
 
@@ -98,38 +98,20 @@ else
   absdir=`cd "$thisdir" && pwd`
   test -n "$absdir" && thisdir="$absdir"
 
-  program=lt-'crfsuite'
+  program='crfsuite'
   progdir="$thisdir/.libs"
 
-  if test ! -f "$progdir/$program" ||
-     { file=`ls -1dt "$progdir/$program" "$progdir/../$program" 2>/dev/null | /bin/sed 1q`; \
-       test "X$file" != "X$progdir/$program"; }; then
-
-    file="$$-$program"
-
-    if test ! -d "$progdir"; then
-      mkdir "$progdir"
-    else
-      rm -f "$progdir/$file"
-    fi
-
-    # relink executable if necessary
-    if test -n "$relink_command"; then
-      if relink_command_output=`eval $relink_command 2>&1`; then :
-      else
-	echo "$relink_command_output" >&2
-	rm -f "$progdir/$file"
-	exit 1
-      fi
-    fi
-
-    mv -f "$progdir/$file" "$progdir/$program" 2>/dev/null ||
-    { rm -f "$progdir/$program";
-      mv -f "$progdir/$file" "$progdir/$program"; }
-    rm -f "$progdir/$file"
-  fi
 
   if test -f "$progdir/$program"; then
+    # Add our own library path to DYLD_LIBRARY_PATH
+    DYLD_LIBRARY_PATH="/Users/amita/git/feng-hirst-rst-parser-acl-2014/tools/crfsuite/crfsuite-0.12/lib/crf/.libs:/Users/amita/git/feng-hirst-rst-parser-acl-2014/tools/crfsuite/crfsuite-0.12/lib/cqdb/.libs:$DYLD_LIBRARY_PATH"
+
+    # Some systems cannot cope with colon-terminated DYLD_LIBRARY_PATH
+    # The second colon is a workaround for a bug in BeOS R4 sed
+    DYLD_LIBRARY_PATH=`$ECHO "X$DYLD_LIBRARY_PATH" | $Xsed -e 's/::*$//'`
+
+    export DYLD_LIBRARY_PATH
+
     if test "$libtool_execute_magic" != "%%%MAGIC variable%%%"; then
       # Run the actual program with our arguments.
 
@@ -142,7 +124,7 @@ else
     # The program doesn't exist.
     $ECHO "$0: error: \`$progdir/$program' does not exist" 1>&2
     $ECHO "This script is just a wrapper for $program." 1>&2
-    echo "See the libtool documentation for more information." 1>&2
+    /bin/echo "See the libtool documentation for more information." 1>&2
     exit 1
   fi
 fi

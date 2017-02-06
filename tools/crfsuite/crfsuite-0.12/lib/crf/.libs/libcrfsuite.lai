@@ -5,19 +5,19 @@
 # It is necessary for linking the library.
 
 # The name that we can dlopen(3).
-dlname='libcrfsuite-0.12.so'
+dlname='libcrfsuite-0.12.dylib'
 
 # Names of this library.
-library_names='libcrfsuite-0.12.so libcrfsuite-0.12.so libcrfsuite.so'
+library_names='libcrfsuite-0.12.dylib libcrfsuite.dylib'
 
 # The name of the static archive.
 old_library='libcrfsuite.a'
 
 # Linker flags that can not go in dependency_libs.
-inherited_linker_flags=''
+inherited_linker_flags=' '
 
 # Libraries that this one depends upon.
-dependency_libs=' -L/u/weifeng/commercialized/gCRF/tools/crfsuite/crfsuite-0.12/lib /u/weifeng/commercialized/gCRF/tools/crfsuite/crfsuite-0.12/lib/libcqdb.la -L/u/weifeng/commercialized/gCRF/tools/crfsuite-0.12/lib /u/weifeng/commercialized/gCRF/tools/crfsuite/liblbfgs-1.10/lib/liblbfgs.la -lm'
+dependency_libs=' -L/Users/amita/local/lib /Users/amita/local/lib/libcqdb.la /Users/amita/local/lib/liblbfgs.la -lm'
 
 # Names of additional weak libraries provided by this library
 weak_library_names=''
@@ -38,4 +38,4 @@ dlopen=''
 dlpreopen=''
 
 # Directory that this library needs to be installed in:
-libdir='/u/weifeng/commercialized/gCRF/tools/crfsuite/crfsuite-0.12/lib'
+libdir='/Users/amita/local/lib'
